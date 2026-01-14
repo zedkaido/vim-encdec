@@ -1,0 +1,85 @@
+*encdec.txt* Encode/Decode Data
+
+Author: Zed Kaido <https://zedkaido.com>
+License: Same terms as Vim itself (see |license|)
+
+Requires vim9script compatibility and no `compatible` mode.
+
+INTRODUCTION                                *encdec* *vim-encdec*
+
+This plugin provides enc/dec maps:
+Set to NORMAL/VISUAL and (g@) OPERATOR PENDING MODE.
+
+Mnemonic:
+- Encode with '['
+- Decode with ']'
+
+                                                 *[u* *[uu* *v_[u
+[u{motion}           URI Encode.
+[uu                  /?q=foo bar baz => %2F%3Fq%3Dfoo%20bar%20baz
+{Visual}[u
+
+                                                 *]u* *]uu* *v_]u
+]u{motion}           URI Decode.
+]uu                  %2F%3Fq%3Dfoo%20bar%20baz => /?q=foo bar baz
+{Visual}]u
+
+                                                 *[C* *[CC* *v_[C
+[C{motion}           C String Encode: \n \t \"
+[CC                  "bar", "baz" => \"bar\", \"baz\"
+{Visual}[C
+
+                                                 *]C* *]CC* *v_]C
+]C{motion}           C String Decode: \n \t \"
+]CC                  \"bar\", \"baz\" => "bar", "baz"
+{Visual}]C
+
+                                                 *[x* *[xx* *v_[x
+[x{motion}           XML/HTML Encode.
+[xx                  <foo bar="baz"> => &lt;foo bar=&quot;baz&quot;&gt;
+{Visual}[x
+
+                                                 *]x* *]xx* *v_]x
+]x{motion}           XML/HTML Decode.
+]xx                  &lt;foo bar=&quot;baz&quot;&gt; => <foo bar="baz">
+{Visual}]x
+
+                                                 *[h* *[hh* *v_[h [H
+[h{motion}           txt/bin -> Hex
+[hh                  bar baz => 6261722062617a
+{Visual}[h
+[H                   Bin -> Hex (%) hexdump entire file
+
+                                                 *]h* *]hh* *v_]h ]H
+]h{motion}           Hex -> txt/bin
+]hh                  bar baz => 6261722062617a
+{Visual}]h
+]H                   Hex -> Bin (%) hexdump back to raw data
+
+                                                 *[64* *[64_ *v_[64
+[64{motion}          Base64 Encode txt/bin.
+[64_                 foo bar baz => Zm9vIGJhciBiYXo=
+{Visual}[64
+
+                                                 *]64* *]64_ *v_]64
+]64{motion}          Base64 Decode to txt/bin.
+]64                  Zm9vIGJhciBiYXo= => foo bar baz
+{Visual}]64
+
+                                                 *[32* *[32_ *v_[32
+[32{motion}          Base32 Encode txt/bin.
+[32_                 foo bar baz => MZXW6IDCMFZCAYTBPI======
+{Visual}[32
+
+                                                 *]32* *]32_ *v_]32
+]32{motion}          Base32 Decode to txt/bin.
+]32                  MZXW6IDCMFZCAYTBPI====== => foo bar baz
+{Visual}]32
+
+
+ABOUT                                           *encdec-about*
+
+Enc/Dec Maps
+https://github.com/zedkaido/vim-encdec
+
+ vim:tw=78:et:ft=help:norl:
